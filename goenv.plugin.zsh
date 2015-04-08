@@ -41,7 +41,7 @@ function make_go_workspace {
         ws_name=$1;
 
         pushd $GO_ENV > /dev/null;
-        mkdir $ws_name/{bin,pkg,src}
+        mkdir -p $ws_name/{bin,pkg,src}
         _golang_workon $1
         export GOPATH=$PWD/$ws_name
         popd > /dev/null;
