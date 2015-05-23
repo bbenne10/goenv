@@ -1,28 +1,28 @@
 function _golang_normalize_env {
     if [ "${${:-$GO_ENV}[-1]}" = "/" ]; then
         export GO_ENV=${GO_ENV:0:${#GO_ENV}-1}
-    elif [ -z $GO_ENV ]; then
+    elif [ -z "$GO_ENV" ]; then
         export GO_ENV="$HOME/.goenvs";
     fi
 
-    if [ ! -d $GO_ENV ]; then
-        mkdir $GO_ENV
+    if [ ! -d "$GO_ENV" ]; then
+        mkdir "$GO_ENV"
     fi
 }
 
 function _golang_workon {
-    if [ -z $1 ]; then
-        echo "Specify a workspace to work with";
+    if [ -z "$1" ]; then
+        printf "Specify a workspace to work with\n";
         return
     fi
 
     _golang_normalize_env;
-    GOPATH=$(echo "$GO_ENV/$1")
+    GOPATH=$(printf "$GO_ENV/$1\n")
 
-    if [ -d $GOPATH ]; then
+    if [ -d "$GOPATH" ]; then
         export GOPATH
     else
-        echo "No directory found for \$GOPATH. Has it been created with 'make_go_workspace'?"
+        printf 'No directory found for $GOPATH. Has it been created with 'make_go_workspace'?\n'
         return
     fi
 }
@@ -31,7 +31,7 @@ alias goworkon=_golang_workon
 
 function make_go_workspace {
     if [ -z $1 ]; then
-        echo "Specify a workspace name";
+        printf "Specify a workspace name\n";
         return
     fi
 
@@ -46,7 +46,7 @@ function make_go_workspace {
         export GOPATH=$PWD/$ws_name
         popd > /dev/null;
     else
-        echo "Workspace '$1' already exists!"
+        printf "Workspace '$1' already exists!\n"
         return
     fi
 
