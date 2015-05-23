@@ -57,5 +57,13 @@ function make_go_workspace {
         printf "Workspace '$1' already exists!\n"
         return
     fi
+}
 
+function golang_deactivate {
+    if [ -n "$_GOENV_OLD_PATH" ]; then
+        PATH="$_GOENV_OLD_PATH"
+        export PATH
+    fi
+
+    unset GOPATH
 }
