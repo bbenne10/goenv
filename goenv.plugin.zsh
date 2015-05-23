@@ -38,9 +38,9 @@ function _golang_workon {
     fi
 }
 
-alias goworkon=_golang_workon
+alias go_workon=_golang_workon
 
-function make_go_workspace {
+function mk_go_workspace {
     if [ -z $1 ]; then
         printf "Specify a workspace name\n";
         return 1
@@ -61,7 +61,7 @@ function make_go_workspace {
     fi
 }
 
-function golang_deactivate {
+function go_deactivate {
     if [ -n "$_GOENV_OLD_PATH" ]; then
         PATH="$_GOENV_OLD_PATH"
         export PATH
