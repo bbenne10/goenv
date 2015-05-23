@@ -69,3 +69,21 @@ function go_deactivate {
 
     unset GOPATH
 }
+
+
+function rm_go_workspace {
+    if [ -z $1 ]; then
+        printf "Specify a workspace to delete\n";
+        return 1
+    fi
+
+    _golang_normalize_env;
+    if [ ! -d $GO_ENV/$1 ]; then
+        # This workspace doesn't exist?
+        printf "Workspace \"$1\" doesn't exist.\n"
+        return 1
+    fi
+
+    rm -rf $GO_ENV/$1 > /dev/null
+    go_deactivate;
+}
