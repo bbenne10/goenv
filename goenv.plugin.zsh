@@ -29,7 +29,9 @@ function _golang_workon {
     if [ -d "$GOPATH" ]; then
         export GOPATH
         export PATH
-        printf "GOPATH => %s\n PATH => %s\n" $GOPATH $PATH
+        if [ -n "$GOENV_VERBOSE" ]; then
+            printf "GOPATH => %s\nPATH => %s\n" $GOPATH $PATH
+        fi
     else
         printf 'No directory found for $GOPATH. Has it been created with 'mk_go_workspace'?\n'
         return 1
