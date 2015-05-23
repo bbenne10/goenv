@@ -19,8 +19,17 @@ function _golang_workon {
     _golang_normalize_env;
     GOPATH=$(printf "$GO_ENV/$1\n")
 
+    if [ -z "$_GOENV_OLD_PATH" ]; then
+        # We have no old path - we can undonditionally set it
+        _GOENV_OLD_PATH="$PATH"
+    fi
+
+    PATH=$_GOENV_OLD_PATH:$GOPATH/bin
+
     if [ -d "$GOPATH" ]; then
         export GOPATH
+        export PATH
+        printf "GOPATH => %s\n PATH => %s\n" $GOPATH $PATH
     else
         printf 'No directory found for $GOPATH. Has it been created with 'make_go_workspace'?\n'
         return
@@ -43,7 +52,6 @@ function make_go_workspace {
         pushd $GO_ENV > /dev/null;
         mkdir -p $ws_name/{bin,pkg,src}
         _golang_workon $1
-        export GOPATH=$PWD/$ws_name
         popd > /dev/null;
     else
         printf "Workspace '$1' already exists!\n"
